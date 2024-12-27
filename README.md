@@ -23,7 +23,7 @@ To get started with the project, follow the steps below:
 
 ### 1. Clone the Repository 
 ``` bash
-https://github.com/shubhamghadge20/e-commerce-web-application.git
+git clone https://github.com/shubhamghadge20/e-commerce-web-application.git
 ```
 ### 2. Navigate to the Project Directory 
 ```bash
