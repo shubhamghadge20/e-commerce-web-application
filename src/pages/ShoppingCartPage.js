@@ -1,4 +1,3 @@
-// src/pages/ShoppingCartPage.js
 import React from 'react';
 import { useCart } from '../context/CartContext'; // Cart context for managing cart state
 import { Link } from 'react-router-dom';
@@ -6,10 +5,13 @@ import { Link } from 'react-router-dom';
 const ShoppingCartPage = () => {
   const { cartItems, removeFromCart, updateCartQuantity, totalPrice } = useCart(); // Extract cart functions and items from context
 
-  const handleQuantityChange = (id, event) => {
-    const quantity = parseInt(event.target.value);
-    if (quantity > 0) { // Ensure quantity is a positive number
-      updateCartQuantity(id, quantity); // Update cart quantity when user changes it
+  const handleIncrement = (id, currentQuantity) => {
+    updateCartQuantity(id, currentQuantity + 1); // Increment quantity by 1
+  };
+
+  const handleDecrement = (id, currentQuantity) => {
+    if (currentQuantity > 1) {
+      updateCartQuantity(id, currentQuantity - 1); // Decrement quantity by 1, ensuring it doesn't drop below 1
     }
   };
 
@@ -31,23 +33,33 @@ const ShoppingCartPage = () => {
                 <h3 className="text-xl font-semibold">{item.name}</h3>
                 <p className="text-lg text-gray-600">${item.price}</p>
                 <div className="flex items-center mt-2">
-                  {/* Input to change quantity */}
-                  <input
-                    type="number"
-                    value={item.quantity}
-                    min="1"
-                    onChange={(e) => handleQuantityChange(item.id, e)}
-                    className="w-16 p-1 border rounded mr-2"
-                  />
+                  {/* Increment and Decrement Buttons */}
+                  <button
+                    onClick={() => handleDecrement(item.id, item.quantity)}
+                    className="px-2 py-1 bg-gray-200 text-gray-600 rounded-l-md hover:bg-gray-300 focus:outline-none"
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-1 border-t border-b text-center w-12">
+                    {item.quantity}
+                  </span>
+                  <button
+                    onClick={() => handleIncrement(item.id, item.quantity)}
+                    className="px-2 py-1 bg-gray-200 text-gray-600 rounded-r-md hover:bg-gray-300 focus:outline-none"
+                  >
+                    +
+                  </button>
                   <button
                     onClick={() => removeFromCart(item.id)} // Remove item from cart
-                    className="text-red-500 hover:text-red-700"
+                    className="ml-4 text-red-500 hover:text-red-700"
                   >
                     Remove
                   </button>
                 </div>
               </div>
-              <div className="text-lg font-semibold">${(item.price * item.quantity).toFixed(2)}</div>
+              <div className="text-lg font-semibold">
+                ${(item.price * item.quantity).toFixed(2)}
+              </div>
             </div>
           ))}
 
@@ -63,7 +75,9 @@ const ShoppingCartPage = () => {
           </div>
         </div>
       ) : (
-        <div className="text-center py-10 text-lg text-gray-600">Your cart is empty.</div>
+        <div className="text-center py-10 text-lg text-gray-600">
+          Your cart is empty.
+        </div>
       )}
     </div>
   );
