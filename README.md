@@ -11,11 +11,11 @@ This project is a simple e-commerce web application built with React. It allows 
 **Responsive Design:** Mobile-friendly with a collapsible menu and smooth transitions.  
 
 ## Technologies Used
--**React** 
--**React Router** 
--**Axios** 
--**Tailwind CSS (for styling)** 
--**Context API for state management** 
+-**React**  
+-**React Router**  
+-**Axios**  
+-**Tailwind CSS (for styling)**  
+-**Context API for state management**  
 
 ## Installation 
 
